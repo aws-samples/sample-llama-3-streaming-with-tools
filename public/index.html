@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Bedrock Llama 3 Examples</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div>
+        <h1>Amazon Bedrock Llama 3 Examples</h1>
+        <p class="description">
+            This project demonstrates three different approaches to working with Amazon Bedrock's Llama 3 model.
+            Select one of the examples below to explore different capabilities.
+        </p>
+        
+        <!-- Credentials status will be displayed here -->
+        <div id="credentials-status" class="credentials-status"></div>
+        
+        <!-- Menu options -->
+        <div class="menu-container">
+            <a href="tools.html" class="menu-option" id="option1">
+                <span class="option-number">1.</span> 
+                <span class="option-title">Llama using Tools</span>
+                <span class="option-description">Non-streaming implementation using the Converse API for tool use</span>
+            </a>
+            
+            <a href="streaming.html" class="menu-option" id="option2">
+                <span class="option-number">2.</span> 
+                <span class="option-title">Llama using Streaming</span>
+                <span class="option-description">Real-time streaming responses using Server-Sent Events</span>
+            </a>
+            
+            <a href="streaming-and-tools.html" class="menu-option" id="option3">
+                <span class="option-number">3.</span> 
+                <span class="option-title">Llama using Streaming and Tools</span>
+                <span class="option-description">Combined approach with streaming responses and tool use</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * This script checks AWS credentials on page load and displays the model information.
+         * It also disables menu options if credentials are invalid.
+         */
+        document.addEventListener('DOMContentLoaded', async () => {
+            const statusElement = document.getElementById('credentials-status');
+            statusElement.innerHTML = '<p>Checking AWS credentials...</p>';
+            
+            try {
+                // Call the credentials check endpoint
+                const response = await fetch('/api/check-credentials');
+                const data = await response.json();
+                
+                if (data.valid) {
+                    // Show success message with model ID
+                    statusElement.innerHTML = `
+                        <div class="success">
+                            <p>✓ AWS credentials are valid</p>
+                            <p><strong>Model:</strong> ${data.modelId}</p>
+                        </div>
+                    `;
+                } else {
+                    // Show error message with model ID and help text
+                    statusElement.innerHTML = `
+                        <div class="error">
+                            <p>⚠️ AWS credentials error: ${data.error}</p>
+                            <p>${data.help}</p>
+                            <p><strong>Model:</strong> ${data.modelId}</p>
+                        </div>
+                    `;
+                    
+                    // Disable all menu options
+                    disableMenuOptions();
+                }
+            } catch (error) {
+                // Show connection error
+                statusElement.innerHTML = `
+                    <div class="error">
+                        <p>⚠️ Error checking credentials: ${error.message}</p>
+                        <p>Please make sure the server is running correctly.</p>
+                    </div>
+                `;
+                
+                // Disable all menu options
+                disableMenuOptions();
+            }
+        });
+        
+        /**
+         * Disables all menu options and adds click handlers to show an alert
+         */
+        function disableMenuOptions() {
+            const menuOptions = document.querySelectorAll('.menu-option');
+            menuOptions.forEach(option => {
+                option.classList.add('disabled');
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('Please fix your AWS credentials before using the examples.');
+                });
+            });
+        }
+    </script>
+</body>
+</html>

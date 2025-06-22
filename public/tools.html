@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Bedrock LLM with Tool Use</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div>
+        <h1>Amazon Bedrock LLM with Tool Use</h1>
+        <p class="description">
+            This example demonstrates using Amazon Bedrock's Llama 3 model with tool use capabilities.
+            Try asking about weather in different locations.
+        </p>
+        <textarea id="prompt" rows="4" placeholder="Enter your prompt here...">Choose a random state in the USA and then choose a small town in that state, then report the weather there.</textarea>
+        <br>
+        <div class="button-container">
+            <button id="generateButton" onclick="generateResponse()">Generate Response</button>
+        </div>
+        <div id="response"></div>
+    </div>
+    <div class="footer">
+        <a href="index.html">Back to Menu</a>
+    </div>
+    <script>
+        /**
+         * This example demonstrates how to use the Bedrock Converse API for tool use.
+         * It uses a non-streaming approach where the server handles the complete
+         * tool use flow and returns the final result.
+         */
+        
+        /**
+         * Generates a response using the Converse API with tool use
+         * This is a non-streaming implementation that waits for the complete response
+         */
+        async function generateResponse() {
+            const promptElement = document.getElementById('prompt');
+            const responseElement = document.getElementById('response');
+            const generateButton = document.getElementById('generateButton');
+            
+            // Update UI to show processing state
+            generateButton.disabled = true;
+            generateButton.textContent = "Generating...";
+            responseElement.innerHTML = '<p><strong>Thinking...</strong></p>';
+            
+            try {
+                const prompt = promptElement.value.trim();
+                
+                // Input validation
+                if (!prompt) {
+                    showError(responseElement, "Please enter a prompt.");
+                    resetButton(generateButton);
+                    return;
+                }
+                
+                // Call the API endpoint
+                const response = await fetch('/api/generate/tools', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt }),
+                });
+                
+                const data = await response.json();
+                
+                // Handle API response
+                if (data.error) {
+                    showError(responseElement, data.error);
+                } else {
+                    // Display the response
+                    displayResponse(responseElement, data);
+                }
+            } catch (error) {
+                showError(responseElement, error.message);
+            } finally {
+                // Always reset the button
+                resetButton(generateButton);
+            }
+        }
+        
+        /**
+         * Displays the model response and any tool use information
+         * 
+         * @param {HTMLElement} container - The container element
+         * @param {Object} data - The response data
+         */
+        function displayResponse(container, data) {
+            // Clear previous response
+            container.innerHTML = '';
+            
+            // Create response paragraph
+            const responseParagraph = document.createElement('p');
+            responseParagraph.innerHTML = `<strong>Response:</strong> ${data.response.replace(/\n/g, '<br>')}`;
+            container.appendChild(responseParagraph);
+            
+            // If tool was used, show the weather data
+            if (data.toolUsed) {
+                // Display tool call information
+                const weatherDiv = document.createElement('div');
+                weatherDiv.className = 'tool-call';
+                weatherDiv.innerHTML = `<p><strong>Weather Tool Used:</strong> Checking weather for ${data.location}</p>`;
+                container.appendChild(weatherDiv);
+                
+                // Display tool response information
+                const weatherResponseDiv = document.createElement('div');
+                weatherResponseDiv.className = 'tool-response';
+                weatherResponseDiv.innerHTML = `
+                    <p><strong>Weather Data:</strong></p>
+                    <ul>
+                        <li><strong>Location:</strong> ${data.weatherData.location}</li>
+                        <li><strong>Temperature:</strong> ${data.weatherData.temperature}°${data.weatherData.unit === 'celsius' ? 'C' : 'F'}</li>
+                        <li><strong>Condition:</strong> ${data.weatherData.condition}</li>
+                        <li><strong>Humidity:</strong> ${data.weatherData.humidity}</li>
+                        <li><strong>Wind:</strong> ${data.weatherData.wind}</li>
+                    </ul>
+                `;
+                container.appendChild(weatherResponseDiv);
+            }
+        }
+        
+        /**
+         * Shows an error message
+         * 
+         * @param {HTMLElement} container - The container element
+         * @param {string} message - The error message
+         */
+        function showError(container, message) {
+            container.innerHTML = `<p class="error">Error: ${message}</p>`;
+        }
+        
+        /**
+         * Resets the button to its default state
+         * 
+         * @param {HTMLElement} button - The button element
+         */
+        function resetButton(button) {
+            button.disabled = false;
+            button.textContent = "Generate Response";
+        }
+    </script>
+</body>
+</html>

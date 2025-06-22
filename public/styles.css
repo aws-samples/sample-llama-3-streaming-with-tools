@@ -1,0 +1,232 @@
+/**
+ * Styles for Amazon Bedrock LLM Examples
+ */
+
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #333;
+}
+
+h1 {
+    color: #0066cc;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Description text */
+.description {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* Form elements */
+textarea {
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #0052a3;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Response area */
+#response {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    min-height: 100px;
+    background-color: #fafafa;
+}
+
+/* Button container */
+.button-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+/* Tool call and response styling */
+.tool-call, .tool-response {
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.tool-call {
+    background-color: #f0f7ff;
+    border-left: 4px solid #0066cc;
+}
+
+.tool-response {
+    background-color: #f0fff0;
+    border-left: 4px solid #00cc66;
+}
+
+/* Code blocks */
+pre {
+    white-space: pre-wrap;
+    background-color: #f5f5f5;
+    padding: 12px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+/* Status messages */
+.error {
+    color: #d32f2f;
+    background-color: #ffebee;
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 4px solid #d32f2f;
+}
+
+.warning {
+    color: #f57c00;
+    background-color: #fff3e0;
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 4px solid #f57c00;
+}
+
+.success {
+    color: #388e3c;
+    background-color: #e8f5e9;
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 4px solid #388e3c;
+}
+
+.info {
+    color: #0288d1;
+    background-color: #e1f5fe;
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 4px solid #0288d1;
+}
+
+/* Credentials status area */
+.credentials-status {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Menu styling */
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.menu-option {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #0066cc;
+    color: white;
+    text-align: left;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid #0052a3;
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-option:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+}
+
+.menu-option:hover {
+    background-color: #0052a3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.option-number {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.option-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.option-description {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.menu-option.disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    border-color: #aaaaaa;
+    box-shadow: none;
+}
+
+.menu-option.disabled:hover {
+    background-color: #cccccc;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Footer */
+.footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.footer a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
