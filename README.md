@@ -4,6 +4,29 @@ This project demonstrates three different approaches to working with Amazon Bedr
 
 Demo video: https://broadcast.amazon.com/videos/1587174
 
+**IMPORTANT: Educational Demonstration Only**
+
+This is a **demonstration application for educational purposes only** and is **not intended for production deployment**. The application is designed to run locally (localhost) to showcase streaming and tool integration concepts in a controlled environment.
+
+**Security Considerations for Production Use:**
+
+If you plan to adapt this code for production use, you must implement additional security controls including but not limited to:
+
+- **Authentication & Authorization**: Implement proper user authentication (e.g., AWS Cognito, OAuth 2.0) and role-based access controls
+- **Input Validation & Sanitization**: Add comprehensive input validation and output sanitization to prevent injection attacks
+- **Prompt Injection Protection**: Implement prompt hardening techniques and input filtering to prevent prompt injection and jailbreak attempts
+- **Amazon Bedrock Guardrails**: Configure content filtering, topic restrictions, and PII detection using Bedrock Guardrails
+- **Rate Limiting**: Implement API rate limiting and request throttling to prevent abuse
+- **HTTPS/TLS**: Use HTTPS for all communications in production environments
+- **Network Security**: Implement proper network segmentation, firewalls, and access controls
+- **Monitoring & Logging**: Add comprehensive security monitoring, audit logging, and alerting
+- **Credential Management**: Use secure credential storage (AWS Secrets Manager, Parameter Store) instead of configuration files
+- **Error Handling**: Implement secure error handling that doesn't expose sensitive information
+
+**Current Security Posture:**
+
+This demonstration application uses a localhost-only deployment model with minimal security controls appropriate for educational purposes. It assumes a single user in a controlled local environment and should not be exposed to public networks or used with production data.
+
 ## Key Features
 
 - **Three Implementation Examples**:
