@@ -2,8 +2,6 @@
 
 This project demonstrates three different approaches to working with Amazon Bedrock's Llama 3 model, showcasing streaming responses and tool use capabilities using Node.js, Express, and Server-Sent Events (SSE).
 
-Demo video: https://broadcast.amazon.com/videos/1587174
-
 **IMPORTANT: Educational Demonstration Only**
 
 This is a **demonstration application for educational purposes only** and is **not intended for production deployment**. The application is designed to run locally (localhost) to showcase streaming and tool integration concepts in a controlled environment.
